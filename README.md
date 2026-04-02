@@ -1,5 +1,8 @@
 AI bio generator widget.
 
+![Recording](https://github.com/user-attachments/assets/11e40ee9-972a-4c68-9d1a-a19fbf720537)
+
+
 ## Deployment
 
 Deployed on Vercel: https://bio-generator-six-eosin.vercel.app/
