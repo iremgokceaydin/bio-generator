@@ -1,0 +1,46 @@
+{
+  "facts": [
+    {
+      "id": "f_name",
+      "text": "Name: Irem Aydin"
+    },
+    {
+      "id": "f_title",
+      "text": "Title: Product Designer / Design Technologist"
+    },
+    {
+      "id": "f_education",
+      "text": "Education: MA in HCI from Michigan State University, MSc in Game Design from Middle East Technical University and BSc in Computer Engineering from Middle East Technical University."
+    },
+    {
+      "id": "f_loc",
+      "text": "Location: New York, NY"
+    },
+    {
+      "id": "f_exp",
+      "text": "Experience: 9+ years shipping UX-intensive products across consumer and enterprise platforms."
+    },
+    {
+      "id": "f_companies",
+      "text": "Companies: Microsoft; IMDb/Amazon."
+    },
+    {
+      "id": "f_focus",
+      "text": "Focus: data workflows, interactive systems, GenAI-assisted internal tools."
+    },
+    {
+      "id": "f_fun",
+      "text": "Funfact: saw northern lights 4 times."
+    },
+    {
+      "id": "f_interests",
+      "text": "Interests: art, design, museums, coffee shops, feta cheese"
+    }
+  ],
+  "links": {
+    "website": "https://iremgokceaydin.com",
+    "works": "https://iremgokceaydin.com/works/",
+    "resume": "https://iremgokceaydin.com/files/IremGokceAydin_Resume_2025.pdf",
+    "linkedin": "https://linkedin.com/in/iremgokceaydin"
+  }
+}

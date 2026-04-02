@@ -1,65 +1,199 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
 
 export default function Home() {
+  const [bioLength, setBioLength] = useState(40);
+  const [emojis, setEmojis] = useState(18);
+  const [reality, setReality] = useState(85);
+  const [career, setCareer] = useState(88);
+  const [aggression, setAggression] = useState(15);
+
+  const [bio, setBio] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function generateBio() {
+    setLoading(true);
+    setError("");
+    setBio("");
+
+    try {
+      const res = await fetch("/api/generate-bio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bioLength,
+          emojis,
+          reality,
+          career,
+          aggression,
+          // model is intentionally ignored server-side, keeping here as reference in the call
+          model: "google/gemini-3-flash-preview"
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Request failed");
+      }
+
+      setBio(data.bio || "");
+    } catch (e: any) {
+      setError(e.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main
+      style={{
+        maxWidth: 760,
+        margin: "48px auto",
+        padding: 24,
+        fontFamily: "system-ui, -apple-system, sans-serif",
+      }}
+    >
+      <h1 style={{ fontSize: 28, marginBottom: 8 }}>
+        AI Bio Generator
+      </h1>
+
+      <p style={{ color: "#555", marginBottom: 24 }}>
+        Adjust the sliders to control tone and emphasis.
+        Facts come strictly from <code>profile.json</code>.
+      </p>
+
+      <section style={{ display: "grid", gap: 18 }}>
+        <Slider
+          label="Bio length (words)"
+          min={10}
+          max={200}
+          value={bioLength}
+          onChange={setBioLength}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        <Slider
+          label="Emojis"
+          min={0}
+          max={30}
+          value={emojis}
+          onChange={setEmojis}
+        />
+
+        <Slider
+          label="Reality / strictness"
+          min={0}
+          max={100}
+          value={reality}
+          onChange={setReality}
+        />
+
+        <Slider
+          label="Career emphasis"
+          min={0}
+          max={100}
+          value={career}
+          onChange={setCareer}
+        />
+
+        <Slider
+          label="Aggression / boldness"
+          min={0}
+          max={100}
+          value={aggression}
+          onChange={setAggression}
+        />
+
+        <button
+          onClick={generateBio}
+          disabled={loading}
+          style={{
+            marginTop: 16,
+            padding: "14px 18px",
+            borderRadius: 10,
+            border: "none",
+            fontSize: 16,
+            cursor: loading ? "default" : "pointer",
+            background: loading ? "#ccc" : "#000",
+            color: "#fff",
+          }}
+        >
+          {loading && <Spinner />}
+          {loading ? "Generating…" : "Generate bio"}
+        </button>
+
+        {error && (
+          <div style={{ color: "crimson", marginTop: 12 }}>
+            {error}
+          </div>
+        )}
+
+        {bio && (
+          <div
+            style={{
+              marginTop: 24,
+              padding: 18,
+              borderRadius: 12,
+              border: "1px solid #ddd",
+              background: "#fafafa",
+              whiteSpace: "pre-wrap",
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            {bio}
+          </div>
+        )}
+      </section>
+    </main>
+  );
+}
+
+function Slider({
+  label,
+  min,
+  max,
+  value,
+  onChange,
+}: {
+  label: string;
+  min: number;
+  max: number;
+  value: number;
+  onChange: (v: number) => void;
+}) {
+  return (
+    <label style={{ display: "grid", gap: 6 }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <span>{label}</span>
+        <strong>{value}</strong>
+      </div>
+
+      <input
+        type="range"
+        min={min}
+        max={max}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
+    </label>
+  );
+}
+
+function Spinner() {
+  return (
+    <span
+      aria-label="Loading"
+      style={{
+        width: 16,
+        height: 16,
+        borderRadius: "50%",
+        border: "2px solid rgba(255,255,255,0.35)",
+        borderTopColor: "#fff",
+        display: "inline-block",
+        margin: "0 4px -2px 0",
+        animation: "spin 0.8s linear infinite",
+      }}
+    />
   );
 }
