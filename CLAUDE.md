@@ -15,7 +15,7 @@ No test suite is configured.
 
 ## Architecture
 
-Next.js 15 App Router app with React 19 and Tailwind CSS v4. Despite the repo name, this uses **Google Gemini** (not Claude) via `@google/genai`.
+Next.js 15 App Router app with React 19 and Tailwind CSS v4. Despite the repo name, this uses **Google Gemini** via `@google/genai`.
 
 **Request flow:**
 1. `app/page.tsx` — client component with five range sliders (bio length, emoji count, reality, career emphasis, aggression) + generate button
