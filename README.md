@@ -1,9 +1,8 @@
 AI bio generator widget.
 
 <img width="783" height="560" alt="image" src="https://github.com/user-attachments/assets/9cd1b832-dbb6-4087-8b7b-21feadf175ef" />
+<img width="640" height="460" alt="Recording" src="https://github.com/user-attachments/assets/27940d69-b1a3-471b-a55b-b23779e4b6dc" />
 
-
-![Recording](https://github.com/user-attachments/assets/11e40ee9-972a-4c68-9d1a-a19fbf720537)
 
 
 ## Deployment
